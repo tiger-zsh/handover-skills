@@ -1,0 +1,19 @@
+# OS / editor
+.DS_Store
+*.swp
+*~
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# Node
+node_modules/
+
+# 本地评估产物（每个 skill 自己跑出来的）
+**/*-workspace/
+**/evals/results/
