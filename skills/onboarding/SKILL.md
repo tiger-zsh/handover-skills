@@ -46,6 +46,14 @@ git rev-parse --show-toplevel 2>/dev/null || pwd
 - 项目说明：`README*.md` / `CONTRIBUTING.md` / `CLAUDE.md`
 - 环境变量：`.env.example` / `.env.sample`
 
+**优先复用项目的 `CLAUDE.md`**：如果项目里有 `CLAUDE.md`，先完整读一遍。CLAUDE.md 通常是项目熟悉者写给 AI 的协作指南，往往已经覆盖了 onboarding 该写的大部分内容——架构概览、启动命令、已知坑、关键文件。这种情况下：
+
+- **复用**而不是重写——把 CLAUDE.md 已有的事实直接搬过来（标 `[代码确认]`，加上 "来自 CLAUDE.md" 说明），不另起炉灶。
+- 把 §9 "接下来该看什么" 明确指回 `CLAUDE.md`，避免 onboarding.md 和 CLAUDE.md 长期 drift。
+- onboarding 的差异化定位：按**新人最先想知道什么**的顺序重新组织（启动 → 测试 → 入口 → 练手任务）；CLAUDE.md 通常按 "AI 协作上下文" 的顺序组织，两者排版不同但事实应一致。
+
+为什么这条重要：在 CLAUDE.md 写得好的项目里，沿用这条会让 `[待确认]` 项压到极少。反之每次都自己重新推断，既容易出错又和 CLAUDE.md drift。
+
 然后基于这些信息填写 [assets/ONBOARDING.md](assets/ONBOARDING.md) 模板的各小节。
 
 ### 3. 每条信息都要有来源标记
