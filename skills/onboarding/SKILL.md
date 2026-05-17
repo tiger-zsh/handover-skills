@@ -54,7 +54,33 @@ git rev-parse --show-toplevel 2>/dev/null || pwd
 
 为什么这条重要：在 CLAUDE.md 写得好的项目里，沿用这条会让 `[待确认]` 项压到极少。反之每次都自己重新推断，既容易出错又和 CLAUDE.md drift。
 
+**但要先判断 CLAUDE.md 的类型**——它不一定是项目说明。实际遇到的常见三种：
+
+1. **项目说明型**：详尽写了架构、命令、坑、关键文件（比如 Next.js 项目自己写的 CLAUDE.md）。→ 大量复用，效率最高，`[待确认]` 极少。
+2. **协作规则型**：写编码规范、Git workflow、commit 风格等。→ 复用规范类内容，架构和坑仍需从代码挖。
+3. **Skills 框架引用型**：整个 CLAUDE.md 都在引用 superpowers / skills-zh 等框架，没有项目自身信息。→ **跳过 CLAUDE.md 复用路径**，直接走代码扫描——这种情况 `[待确认]` 项会显著多，是预期行为，不要为了凑数硬造。
+
+判断方法：通读一遍 CLAUDE.md。如果其中"项目自身事实"（架构、启动命令、坑、关键文件）的密度明显低，按第 3 类处理，回到代码扫描——并在 onboarding.md §10 提一句"当前 CLAUDE.md 不含项目信息，未来可考虑补充"，方便用户后续用 architecture-map / runbook skill 填补。
+
 然后基于这些信息填写 [assets/ONBOARDING.md](assets/ONBOARDING.md) 模板的各小节。
+
+### 2.5 顺便记录项目自己的 onboarding gap
+
+扫描过程中你可能发现项目本身有阻碍新人上手的小 bug——不是 skill 自己的事，而是项目应该修的。常见例子：
+
+- `.env.example` 漏了 backend 实际需要的环境变量（比如初始 admin 账号、加密密钥）。
+- `README` 的启动命令和实际 `Dockerfile` / `package.json` 不一致。
+- 测试命令在 README 没写但代码里有现成 `npm test` / `pytest` 入口。
+- `package.json` 缺 `engines` 字段（无法知道支持哪个 Node 版本）。
+
+发现这类 gap 时两步处理：
+
+1. **写进 onboarding.md §10 已知坑**——让新人不会踩。比如直接告诉新人："`.env.example` 漏了 `XXX`，请额外加上。"
+2. **在第 6 步提示用户加 CLAUDE.md 引用时一并提醒**——例如："顺便发现 `.env.example` 缺 `XXX`，建议补全。"
+
+为什么这条值得做：onboarding skill 的副产品价值之一就是**给项目挑出自己的 gap**。一个静态文档读不出来，但跑一遍 skill 流程就会撞到。
+
+边界：**只发现 + 报告，不自动修项目**。修不修由用户决定——他可能有理由保持现状。
 
 ### 3. 每条信息都要有来源标记
 
