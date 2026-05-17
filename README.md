@@ -53,28 +53,39 @@
 
 ## 安装
 
-### 推荐：用 skills CLI
+skills CLI 装到**当前项目**，手动 `cp` 装到**用户全局**。按需选。
+
+### 项目级：用 skills CLI（已验证可用）
 
 ```bash
+cd <目标项目根>
 npx -y skills add https://github.com/tiger-zsh/handover-skills --skill onboarding
 ```
 
-会自动安装到 Claude Code / Codex / Cursor 等支持的 agent 环境。
+装到当前项目的 `./.agents/skills/onboarding/`，并被 Claude Code / Codex / Cursor 等多 agent 环境识别为 universal skill。只在该项目目录里生效。
 
-### 手动安装（Claude Code）
+### 用户级（全局）：手动 cp
+
+如果想让所有项目都能用，按你的 agent 环境选一个或多个目录：
 
 ```bash
+# 通用 / 兼容目录（多 agent 共享；当前会话的 skills 实际从这里发现）
+mkdir -p ~/.agents/skills/onboarding
+cp -r skills/onboarding/* ~/.agents/skills/onboarding/
+
+# Claude Code 专用
 mkdir -p ~/.claude/skills/onboarding
 cp -r skills/onboarding/* ~/.claude/skills/onboarding/
-```
 
-### 手动安装（Codex）
-
-```bash
-# Codex 当前环境的 skills 目录
+# Codex 标准目录
 mkdir -p ~/.codex/skills/onboarding
 cp -r skills/onboarding/* ~/.codex/skills/onboarding/
 ```
+
+三个目录关系：
+
+- `~/.agents/skills/` 是 **universal 目录**，多 agent 共享（Claude Code 等会通过 symlink 消费它）。
+- `~/.claude/skills/` 和 `~/.codex/skills/` 是各 agent **专用目录**，只对应一个 agent。
 
 > 后续 `runbook` / `architecture-map` 上线后，把 `--skill onboarding` 替换为对应名字即可。
 
