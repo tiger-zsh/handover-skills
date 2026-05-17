@@ -43,24 +43,31 @@ git rev-parse --show-toplevel 2>/dev/null || pwd
 - 包管理：`package.json` / `pyproject.toml` / `go.mod` / `Cargo.toml` / `Gemfile` / `pom.xml`
 - 启动脚本：`Makefile` / `justfile` / `Taskfile.yml` / `scripts/`
 - 容器化：`Dockerfile` / `docker-compose*.yml`
-- 项目说明：`README*.md` / `CONTRIBUTING.md` / `CLAUDE.md`
+- 项目 agent 文档：`CLAUDE.md`（Claude Code）/ `AGENTS.md`（codex 等）—— 项目熟悉者写给 AI 的协作说明，下文统称 **"agent 文档"**
+- 项目说明：`README*.md` / `CONTRIBUTING.md`
 - 环境变量：`.env.example` / `.env.sample`
 
-**优先复用项目的 `CLAUDE.md`**：如果项目里有 `CLAUDE.md`，先完整读一遍。CLAUDE.md 通常是项目熟悉者写给 AI 的协作指南，往往已经覆盖了 onboarding 该写的大部分内容——架构概览、启动命令、已知坑、关键文件。这种情况下：
+**优先复用项目的 agent 文档**：如果项目里有 `CLAUDE.md` 或 `AGENTS.md`，先完整读一遍。这类文档通常已经覆盖了 onboarding 该写的大部分内容——架构概览、启动命令、已知坑、关键文件。这种情况下：
 
-- **复用**而不是重写——把 CLAUDE.md 已有的事实直接搬过来（标 `[代码确认]`，加上 "来自 CLAUDE.md" 说明），不另起炉灶。
-- 把 §9 "接下来该看什么" 明确指回 `CLAUDE.md`，避免 onboarding.md 和 CLAUDE.md 长期 drift。
-- onboarding 的差异化定位：按**新人最先想知道什么**的顺序重新组织（启动 → 测试 → 入口 → 练手任务）；CLAUDE.md 通常按 "AI 协作上下文" 的顺序组织，两者排版不同但事实应一致。
+- **复用**而不是重写——把 agent 文档已有的事实直接搬过来（标 `[代码确认]`，加上 "来自 CLAUDE.md" 或 "来自 AGENTS.md" 说明），不另起炉灶。
+- 把 §9 "接下来该看什么" 明确指回 agent 文档，避免 onboarding.md 和 agent 文档长期 drift。
+- onboarding 的差异化定位：按**新人最先想知道什么**的顺序重新组织（启动 → 测试 → 入口 → 练手任务）；agent 文档通常按 "AI 协作上下文" 顺序组织，两者排版不同但事实应一致。
 
-为什么这条重要：在 CLAUDE.md 写得好的项目里，沿用这条会让 `[待确认]` 项压到极少。反之每次都自己重新推断，既容易出错又和 CLAUDE.md drift。
+**项目同时有 `CLAUDE.md` 和 `AGENTS.md`** 时（多 agent 协作项目常见，如 Go+React+Python 多组件项目）：
 
-**但要先判断 CLAUDE.md 的类型**——它不一定是项目说明。实际遇到的常见三种：
+- 通常两者内容重叠 90%+，挑较新或较完整的那份读。
+- 如果有冲突，以代码为准；并把冲突点写进 onboarding §10，提示用户后续同步两份。
+- 第 6 步建议引用时**两边都加**（避免一边更新一边掉队 drift）。
 
-1. **项目说明型**：详尽写了架构、命令、坑、关键文件（比如 Next.js 项目自己写的 CLAUDE.md）。→ 大量复用，效率最高，`[待确认]` 极少。
+为什么这条重要：在 agent 文档写得好的项目里，沿用这条会让 `[待确认]` 项压到极少。反之每次都自己重新推断，既容易出错又会和 agent 文档 drift。
+
+**但要先判断 agent 文档的类型**——它不一定是项目说明。实际遇到的常见三种：
+
+1. **项目说明型**：详尽写了架构、命令、坑、关键文件（比如 Next.js 项目自己写的 CLAUDE.md，或 matrix 项目的 AGENTS.md）。→ 大量复用，效率最高，`[待确认]` 极少。
 2. **协作规则型**：写编码规范、Git workflow、commit 风格等。→ 复用规范类内容，架构和坑仍需从代码挖。
-3. **Skills 框架引用型**：整个 CLAUDE.md 都在引用 superpowers / skills-zh 等框架，没有项目自身信息。→ **跳过 CLAUDE.md 复用路径**，直接走代码扫描——这种情况 `[待确认]` 项会显著多，是预期行为，不要为了凑数硬造。
+3. **Skills / 框架引用型**：整个文档都在引用 superpowers / skills-zh 等框架，没有项目自身信息。→ **跳过复用路径**，直接走代码扫描——这种情况 `[待确认]` 项会显著多，是预期行为，不要为了凑数硬造。
 
-判断方法：通读一遍 CLAUDE.md。如果其中"项目自身事实"（架构、启动命令、坑、关键文件）的密度明显低，按第 3 类处理，回到代码扫描——并在 onboarding.md §10 提一句"当前 CLAUDE.md 不含项目信息，未来可考虑补充"，方便用户后续用 architecture-map / runbook skill 填补。
+判断方法：通读一遍 agent 文档。如果其中 "项目自身事实"（架构、启动命令、坑、关键文件）的密度明显低，按第 3 类处理，回到代码扫描——并在 onboarding.md §10 提一句 "当前 agent 文档不含项目信息，未来可考虑补充"，方便用户后续用 architecture-map / runbook skill 填补。
 
 然后基于这些信息填写 [assets/ONBOARDING.md](assets/ONBOARDING.md) 模板的各小节。
 
@@ -76,7 +83,7 @@ git rev-parse --show-toplevel 2>/dev/null || pwd
 发现这类 gap 时两步处理：
 
 1. **写进 onboarding.md §10 已知坑**——让新人不会踩。比如直接告诉新人："`.env.example` 漏了 `XXX`，请额外加上。"
-2. **在第 6 步提示用户加 CLAUDE.md 引用时一并提醒**——例如："顺便发现 `.env.example` 缺 `XXX`，建议补全。"
+2. **在第 6 步提示用户加 agent 文档（`CLAUDE.md` / `AGENTS.md`）引用时一并提醒**——例如："顺便发现 `.env.example` 缺 `XXX`，建议补全。"
 
 为什么这条值得做：onboarding skill 的副产品价值之一就是**给项目挑出自己的 gap**。一个静态文档读不出来，但跑一遍 skill 流程就会撞到。
 
@@ -111,17 +118,16 @@ git rev-parse --show-toplevel 2>/dev/null || pwd
 
 如果 `docs/` 不存在，先创建。然后写入。
 
-### 6. 提示用户考虑加 CLAUDE.md 引用（不要自动改）
+### 6. 提示用户考虑加 agent 文档引用（不要自动改）
 
-完成后输出一段建议，比如：
+完成后输出一段建议。按项目里有哪份 agent 文档分别处理：
 
-```markdown
-建议在项目 CLAUDE.md 中加入：
+- **只有 `CLAUDE.md`**：建议加 "- 新人入口文档：`docs/onboarding.md`" 到 CLAUDE.md。
+- **只有 `AGENTS.md`**（codex 项目）：建议加同样一行到 AGENTS.md。
+- **两者都有**：建议两边都加——保持引用一致，避免 drift。
+- **两者都没有**：跳过这一步。可以建议用户考虑创建一份 agent 文档（后续 architecture-map skill 会帮忙）。
 
-- 新人入口文档：`docs/onboarding.md`
-```
-
-不要自动改 CLAUDE.md。CLAUDE.md 是项目的协作规则文件，自动改有侵入性；不同项目对入口引用的位置和格式偏好不同，应由用户决定。只有用户明确说"也帮我加到 CLAUDE.md"时再改。
+不要自动改 agent 文档。它们是项目的协作规则文件，自动改有侵入性；不同项目对入口引用的位置和格式偏好不同，应由用户决定。只有用户明确说 "也帮我加到 CLAUDE.md / AGENTS.md" 时再改。
 
 ## 验收标准
 
@@ -139,7 +145,7 @@ git rev-parse --show-toplevel 2>/dev/null || pwd
 - **不**写故障 / 错误排查 → 交给 `sop` skill
 - **不**写发布 / 回滚 / 备份 / 告警 → 交给 `runbook` skill（计划中）
 - **不**写完整架构图 / 模块边界 / 数据流 → 交给 `architecture-map` skill（计划中）
-- **不**自动修改项目 `CLAUDE.md`
+- **不**自动修改项目的 agent 文档（`CLAUDE.md` / `AGENTS.md`）
 
 如果用户的需求超出 onboarding 范围，明确告诉他"这部分归 X skill / 等对应 skill 上线后处理"，不要把所有内容都塞进 onboarding。
 
