@@ -53,7 +53,30 @@
 
 ## 安装
 
-参考根目录或各 skill 目录下的 `SKILL.md`。
+### 推荐：用 skills CLI
+
+```bash
+npx -y skills add https://github.com/tiger-zsh/handover-skills --skill onboarding
+```
+
+会自动安装到 Claude Code / Codex / Cursor 等支持的 agent 环境。
+
+### 手动安装（Claude Code）
+
+```bash
+mkdir -p ~/.claude/skills/onboarding
+cp -r skills/onboarding/* ~/.claude/skills/onboarding/
+```
+
+### 手动安装（Codex）
+
+```bash
+# Codex 当前环境的 skills 目录
+mkdir -p ~/.codex/skills/onboarding
+cp -r skills/onboarding/* ~/.codex/skills/onboarding/
+```
+
+> 后续 `runbook` / `architecture-map` 上线后，把 `--skill onboarding` 替换为对应名字即可。
 
 ## 相关
 

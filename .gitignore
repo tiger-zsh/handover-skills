@@ -1,3 +1,11 @@
+# Skill-creator 等开发依赖（用 npx skills add 按需安装，不进仓库）
+.agents/
+.codex/
+.claude/
+
+# Skills CLI 本地 lockfile（仅追踪开发依赖，不属于安装产物）
+skills-lock.json
+
 # OS / editor
 .DS_Store
 *.swp
